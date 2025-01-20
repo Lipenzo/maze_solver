@@ -5,16 +5,16 @@ from line import Line
 class Cell:
     size = 10
 
-    def __init__(self, canvas, point, left=True, top=True, right=True, bottom=True):
+    def __init__(self, win):
         self.left = True
         self.top = True
         self.right  = True
         self.bottom = True
-        self._x1 = point.x
-        self._y1 = point.y
-        self._x2 = self._x1 + self.size
-        self._y2 = self._y1 + self.size
-        self._win = canvas
+        self._x1 = None
+        self._y1 = None
+        self._x2 = None
+        self._y2 = None
+        self._win = win
 
     def draw(self, point1, point2):
         fill_color = "black"
@@ -23,13 +23,13 @@ class Cell:
         self._x2 = point2.x
         self._y2 = point2.y
         if self.left:
-            Line(point1, Point(point1.x, point2.y)).draw(self._win, fill_color)
+            self._win.draw_line(Line(point1, Point(point1.x, point2.y)))
         if self.top:
-            Line(point1, Point(point2.x, point1.y)).draw(self._win, fill_color)
+            self._win.draw_line(Line(point1, Point(point2.x, point1.y)))
         if self.right:
-            Line(point2, Point(point2.x, point1.y)).draw(self._win, fill_color)
+            self._win.draw_line(Line(point2, Point(point2.x, point1.y)))
         if self.bottom:
-            Line(point2, Point(point1.x, point2.y)).draw(self._win, fill_color)
+            self._win.draw_line(Line(point2, Point(point1.x, point2.y)))
 
     def middle_point(self):
         return Point( (self._x1 + self._x2) // 2, (self._y1 + self._y2) // 2)
@@ -39,6 +39,6 @@ class Cell:
         other_mid= to_cell.middle_point()
         line = Line(mid_point, other_mid)
         if undo:
-            line.draw(self._win, "grey")
+            self._win.draw_line(line, "grey")
         else:
-            line.draw(self._win, "red")
+            self._win.draw_line(line, "red")
