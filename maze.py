@@ -3,7 +3,7 @@ from point import Point
 from time import sleep
 
 class Maze:
-    def __init__(self, x1, y1, num_rows, num_colls, cell_size_x, cell_size_y, win):
+    def __init__(self, x1, y1, num_rows, num_colls, cell_size_x, cell_size_y, win=None):
         self.x1 = x1
         self.y1 = y1
         self.num_rows = num_rows
@@ -35,5 +35,6 @@ class Maze:
         self._animate()
     
     def _animate(self):
-        self.win.redraw()
-        sleep(0.05)
+        if  self.win:
+            self.win.redraw()
+            sleep(0.05)
